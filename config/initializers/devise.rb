@@ -272,7 +272,16 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+
+  if Rails.env.development? || Rails.env.test?
+    config.omniauth :github, Rails.application.credentials.dig(:omniauth, :github_dev, :client_id),
+      Rails.application.credentials.dig(:omniauth, :github_dev, :client_secret)
+  end
+
+  if Rails.env.production?
+    config.omniauth :github, Rails.application.credentials.dig(:omniauth, :github_prod, :client_id),
+      Rails.application.credentials.dig(:omniauth, :github_prod, :client_secret)
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
@@ -291,11 +300,11 @@ Devise.setup do |config|
   #     mount MyEngine, at: '/my_engine'
   #
   # The router that invoked `devise_for`, in the example above, would be:
-  # config.router_name = :my_engine
+  #config.router_name = :my_engine
   #
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
-  # config.omniauth_path_prefix = '/my_engine/users/auth'
+  #config.omniauth_path_prefix = '/my_engine/users/auth'
 
   # ==> Turbolinks configuration
   # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:

@@ -2,6 +2,7 @@ class User < ApplicationRecord
   after_commit :link_subscriptions, on: :create
   before_validation :set_name, on: :create
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+  devise :omniauthable, omniauth_providers: %i[github]
   has_many :comments, dependent: :destroy
   has_many :events, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
@@ -14,6 +15,15 @@ class User < ApplicationRecord
   validates :name, presence: true, length: {maximum: 35}
 
   private
+
+  def self.from_omniauth(auth)
+    data = auth.info
+    user = User.where(email: data.email).first || User.create(email: data.email,
+      password: Devise.friendly_token.first(16), name: data.name)
+    user.provider = auth.provider
+    user.url = auth.url
+    user
+  end
 
   def set_name
     self.name = "Товарищ №#{rand(777)}" if self.name.blank?
