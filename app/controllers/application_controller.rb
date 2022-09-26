@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   helper_method :current_user_can_edit?
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  skip_before_action :verify_authenticity_token
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:account_update, keys: [:password, :password_confirmation, :current_password])

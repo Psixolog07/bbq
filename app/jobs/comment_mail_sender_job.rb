@@ -3,6 +3,6 @@ class CommentMailSenderJob < ApplicationJob
 
   def perform(event, comment)
     all_emails = (event.subscriptions.map(&:user_email) + [event.user.email] - [comment.user&.email]).uniq
-    all_emails.each { |mail| EventMailer.comment(comment, mail).deliver_now }
+    all_emails.each { |mail| EventMailer.comment(comment, mail).deliver_later }
   end
 end

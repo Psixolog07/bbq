@@ -14,6 +14,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def set_user
+    File.new("out.txt", 'w') {|f| f.write(request.env["omniauth.auth"]) }
     @user = User.from_omniauth(request.env["omniauth.auth"])
   end
 end

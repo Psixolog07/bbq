@@ -3,6 +3,6 @@ class PhotoMailSenderJob < ApplicationJob
 
   def perform(event, photo)
     all_emails = (event.subscriptions.map(&:user_email) + [event.user.email] - [photo.user.email]).uniq
-    all_emails.each { |mail| EventMailer.photo(photo, mail).deliver_now }
+    all_emails.each { |mail| EventMailer.photo(photo, mail).deliver_later }
   end
 end
