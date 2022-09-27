@@ -275,13 +275,19 @@ Devise.setup do |config|
 
   if Rails.env.development? || Rails.env.test?
     config.omniauth :github, Rails.application.credentials.dig(:omniauth, :github_dev, :client_id),
-      Rails.application.credentials.dig(:omniauth, :github_dev, :client_secret)
+      Rails.application.credentials.dig(:omniauth, :github_dev, :client_secret), scope: "user:email"
   end
 
   if Rails.env.production?
     config.omniauth :github, Rails.application.credentials.dig(:omniauth, :github_prod, :client_id),
-      Rails.application.credentials.dig(:omniauth, :github_prod, :client_secret)
+      Rails.application.credentials.dig(:omniauth, :github_prod, :client_secret), scope: "user:email"
   end
+
+  config.omniauth :google_oauth2, Rails.application.credentials.dig(:omniauth, :google, :client_id),
+    Rails.application.credentials.dig(:omniauth, :google, :client_secret)
+
+  config.omniauth :vkontakte, Rails.application.credentials.dig(:omniauth, :vkontakte_dev, :app_id),
+    Rails.application.credentials.dig(:omniauth, :vkontakte_dev, :app_secret), scope: "email"
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
