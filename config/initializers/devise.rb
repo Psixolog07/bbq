@@ -286,9 +286,6 @@ Devise.setup do |config|
   config.omniauth :google_oauth2, Rails.application.credentials.dig(:omniauth, :google, :client_id),
     Rails.application.credentials.dig(:omniauth, :google, :client_secret)
 
-  config.omniauth :vkontakte, Rails.application.credentials.dig(:omniauth, :vkontakte_dev, :app_id),
-    Rails.application.credentials.dig(:omniauth, :vkontakte_dev, :app_secret), scope: "email"
-
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
