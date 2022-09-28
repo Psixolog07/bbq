@@ -25,10 +25,3 @@ class ApplicationController < ActionController::Base
     redirect_to(request.referrer || root_path)
   end
 end
-
-class UserContext
-  def initialize(user, cookies)
-    @user = user
-    @cookies = cookies
-  end
-end

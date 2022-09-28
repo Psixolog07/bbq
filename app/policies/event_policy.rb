@@ -1,6 +1,6 @@
 class EventPolicy < ApplicationPolicy
   def owner?
-    @record.user == @user
+    @record.user.id == @user.id
   end
 
   def create?
@@ -26,7 +26,7 @@ class EventPolicy < ApplicationPolicy
   private
 
   def password_guard
-    @record.pincode.blank? || owner? || @record.pincode_valid?(@cookies&.permanent&["events_#{@record.id}_pincode"])
+    @record.pincode.blank? || owner? || @record.pincode_valid?(@user.cookies["events_#{@record.id}_pincode"])
   end
 
   class Scope < Scope
