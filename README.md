@@ -24,7 +24,7 @@ EDITOR="ваш_редактор --wait" bin/rails credentials:edit
 ```
 secret_key_base: ваш_секретный_ключ 
 
-> Создается сам, трогать его не нужно.
+>    Создается сам, трогать его не нужно.
 
 yc: > Возможность добавления картинок реализована с помощью bucket на yandex cloud. [Зарегистрируйтесь на облаке](https://cloud.yandex.ru/docs/billing/quickstart/) и [создайте бакет](https://cloud.yandex.ru/docs/storage/operations/buckets/create)
   access_key_id: айди_вашего_ключа
